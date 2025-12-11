@@ -7,7 +7,7 @@ docker ps --filter "name=kafka" --format "table {{.Names}}\t{{.Status}}"
 
 echo.
 echo 2. Verificando saúde do Kafka...
-docker inspect kafka --format "{{json .State.Health }}" | python -c "import json,sys; obj=json.load(sys.stdin); print(f'Status: {obj[\"Status\"]}')"
+for /f "tokens=*" %%i in ('docker inspect kafka --format "{{.State.Health.Status}}"') do (echo Status: %%i)
 
 echo.
 echo 3. Listando tópicos...

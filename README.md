@@ -88,10 +88,7 @@ chmod +x scripts/*.sh
 ## Testando API com cURL
 
 ```bash
-# Teste completo automatizado
-scripts\test-api-enhanced.bat
-
-# Ou manualmente:
+#manualmente:
 
 # Registrar usuário
 curl -X POST http://localhost:8000/usuarios/registrar \

@@ -31,7 +31,7 @@ call scripts/test-api.bat
 echo.
 echo FASE 7: Configurando monitoramento...
 echo Configurando datasource do Prometheus no Grafana...
-#call scripts/monitoring-setup.bat
+call scripts/monitoring-setup.bat
 timeout 10
 
 echo.

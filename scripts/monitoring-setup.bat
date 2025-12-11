@@ -14,18 +14,7 @@ call scripts/setup-grafana.bat
 
 echo.
 echo 3. Verificando metricas no Prometheus...
-curl -s "http://localhost:9090/api/v1/query?query=up" | python -c "
-import json, sys
-data = json.load(sys.stdin)
-if 'data' in data and 'result' in data['data']:
-    for result in data['data']['result']:
-        job = result['metric'].get('job', 'unknown')
-        value = result['value'][1]
-        status = 'OK' if value == '1' else 'ERROR'
-        print(f'{status} {job}: {value}')
-else:
-    print('Nenhuma metrica encontrada')
-"
+powershell -NoProfile -Command "try { $response = Invoke-RestMethod -Uri 'http://localhost:9090/api/v1/query?query=up' -Method Get; if ($response.data.result) { foreach ($r in $response.data.result) { $job = $r.metric.job; $value = $r.value[1]; $status = if ($value -eq '1') { 'OK' } else { 'ERROR' }; Write-Host \"$status $job`: $value\" } } else { Write-Host 'Nenhuma metrica encontrada' } } catch { Write-Host 'Erro ao consultar Prometheus:' $_.Exception.Message }"
 
 echo.
 echo 4. URLs de Monitoramento:
